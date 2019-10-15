@@ -1,0 +1,22 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe Game",
+  "main": "index.html",
+  "scripts": {
+    "test": "run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://srtdeployment@bitbucket.org/srtdeployment/tictactoe.git"
+  },
+  "keywords": [
+    "AI"
+  ],
+  "author": "Robin Gonzalez",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/srtdeployment/tictactoe#readme",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}
