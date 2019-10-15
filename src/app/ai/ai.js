@@ -1,7 +1,13 @@
 var Game;
 (function (Game) {
     'use strict';
-
+    /**
+     * Artificial Intelligence class that implements minimax algorithm to play in a omok/gomoku board
+     * @author Robin Gonzalez <robinmg1@hotmail.com>
+     * @param {flag cpu player} me 
+     * @param {flag for human player} human 
+     * @param {depth level of search} level 
+     */
     function AI(me, human, level) {
         var _this = this;
         var K_MAX_POINT = 10000;
@@ -19,7 +25,7 @@ var Game;
         ///
 
         /**
-         * This method gets CPU play
+         * This method gets CPU play async
          * @param {Board} board Game instance.
          */
         function playAsync(board) {
@@ -30,14 +36,27 @@ var Game;
             });
         }
 
+        /**
+         * This method gets CPU play sync
+         * @param {Board} board Game instance.
+         */
         function play(board) {
             return MiniMax(board);
         }
 
+        /**
+         * Gets value using offset in a vector
+         * @param {row} i 
+         * @param {col} j 
+         */
         function getId(i, j) {
             return i * Game.Config.COLS + j;
         }
 
+        /**
+         * This function builds array nodes where can be played in the board
+         * @param {game board [N*M]} board 
+         */
         function getGameNodes(board) {
             var nodes = new Array(Game.Config.COLS * Game.Config.ROWS);
             for (var i = 0; i < Game.Config.ROWS; i++) {
@@ -50,6 +69,13 @@ var Game;
             return nodes;
         }
 
+        /**
+         * Build a vector where can be played
+         * @param {row} i 
+         * @param {col} j 
+         * @param {game board [N*M]} board 
+         * @param {vector of integers} nodes 
+         */
         function setAdycentNodes(i, j, board, nodes) {
             board.canThrow(i - 1, j - 1) && (nodes[(i - 1) * Game.Config.COLS + (j - 1)] = [i - 1, j - 1]);
             board.canThrow(i - 1, j) && (nodes[(i - 1) * Game.Config.COLS + j] = [i - 1, j]);
@@ -129,6 +155,11 @@ var Game;
             return alpha;
         }
 
+        /**
+         * Heuristic function, it tells how bad decision is current play for bot player
+         * @param {game board [N*M]} board 
+         * @param {tells if someone wins or is tie} gmovr 
+         */
         function heuristic(board, gmovr) {
             var cost = 0;
             if (gmovr === _this.me) return K_MAX_POINT;
@@ -160,6 +191,13 @@ var Game;
             return depth - 1;
         }
 
+        /**
+         * Helper function for heuristic, it calcs how many lines are left to win
+         * @param {row} i 
+         * @param {col} j 
+         * @param {game board [N*M]} board 
+         * @param {flag human player} vs 
+         */
         function linesToWin(i, j, board, vs) {
             var START = 1;
             var k = 0;
@@ -183,6 +221,10 @@ var Game;
             return k;
         }
 
+        /**
+         * Get board game playinf depeding player plays
+         * @param {player flag} plyr 
+         */
         function getNodes(plyr) {
             if (plyr === _this.me) {
                 return _this.meMoves;
@@ -191,6 +233,12 @@ var Game;
             }
         }
 
+        /**
+         * Heuristic helper function, it calcs how possible es that current player can wins using lines to win helper
+         * @param {game board} board 
+         * @param {player flag} plyr 
+         * @param {rival player flag} vs 
+         */
         function unitCost(board, plyr, vs) {
             var nivel = 0;
             var nodes = getNodes(plyr);
