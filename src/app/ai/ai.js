@@ -46,8 +46,8 @@ var Game;
 
         /**
          * Gets value using offset in a vector
-         * @param {row} i 
-         * @param {col} j 
+         * @param {number} i 
+         * @param {number} j 
          */
         function getId(i, j) {
             return i * Game.Config.COLS + j;
@@ -55,7 +55,7 @@ var Game;
 
         /**
          * This function builds array nodes where can be played in the board
-         * @param {game board [N*M]} board 
+         * @param {Game.Board} board 
          */
         function getGameNodes(board) {
             var nodes = new Array(Game.Config.COLS * Game.Config.ROWS);
@@ -71,10 +71,10 @@ var Game;
 
         /**
          * Build a vector where can be played
-         * @param {row} i 
-         * @param {col} j 
-         * @param {game board [N*M]} board 
-         * @param {vector of integers} nodes 
+         * @param {number} i 
+         * @param {number} j 
+         * @param {Game.Board} board 
+         * @param {Array} nodes 
          */
         function setAdycentNodes(i, j, board, nodes) {
             board.canThrow(i - 1, j - 1) && (nodes[(i - 1) * Game.Config.COLS + (j - 1)] = [i - 1, j - 1]);
@@ -157,8 +157,8 @@ var Game;
 
         /**
          * Heuristic function, it tells how bad decision is current play for bot player
-         * @param {game board [N*M]} board 
-         * @param {tells if someone wins or is tie} gmovr 
+         * @param {Game.Board} board 
+         * @param {number} gmovr 
          */
         function heuristic(board, gmovr) {
             var cost = 0;
@@ -193,10 +193,10 @@ var Game;
 
         /**
          * Helper function for heuristic, it calcs how many lines are left to win
-         * @param {row} i 
-         * @param {col} j 
-         * @param {game board [N*M]} board 
-         * @param {flag human player} vs 
+         * @param {number} i 
+         * @param {number} j 
+         * @param {Game.Board} board 
+         * @param {number} vs 
          */
         function linesToWin(i, j, board, vs) {
             var START = 1;
@@ -223,7 +223,7 @@ var Game;
 
         /**
          * Get board game playinf depeding player plays
-         * @param {player flag} plyr 
+         * @param {number} plyr - player flag
          */
         function getNodes(plyr) {
             if (plyr === _this.me) {
@@ -235,9 +235,9 @@ var Game;
 
         /**
          * Heuristic helper function, it calcs how possible es that current player can wins using lines to win helper
-         * @param {game board} board 
-         * @param {player flag} plyr 
-         * @param {rival player flag} vs 
+         * @param {Game.Board} board 
+         * @param {number} plyr 
+         * @param {number} vs 
          */
         function unitCost(board, plyr, vs) {
             var nivel = 0;
